@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  private baseServerUrl = "https://localhost:7141/api/User";
+  private baseServerUrl = "https://localhost:7292/api/User";
 
   constructor(private http: HttpClient) {}
 
@@ -25,10 +25,17 @@ export class AuthService {
     return this.http.post(`${this.baseServerUrl}/Login`, loginData);
   }
 
+  // ✅ NEW: Call backend to send OTP
+  sendOtp(nid: string): Observable<any> {
+    return this.http.post(`${this.baseServerUrl}/SendOtp`, { nid }); // ✅ Backend will store OTP
+  }
+
+  // ✅ NEW: Call backend to validate OTP
+  validateOtp(nid: string, otp: string): Observable<any> {
+    return this.http.post(`${this.baseServerUrl}/ValidateOtp`, { nid, otp }); // ✅ Backend checks OTP
+  }
+
   // NEW: Get platforms by NID
- /* getPlatformsByNID(nid: string): Observable<any[]> {
-  return this.http.get<any[]>(`https://localhost:7141/api/User/GetPlatformsByNID/${nid}`);
-}*/
 
   getPlatformsByNID(nid: string) {
   return this.http.get<any[]>(`${this.baseServerUrl}/GetPlatformsByNID/${nid}`);
@@ -36,6 +43,9 @@ export class AuthService {
 
 getUserName(nid: string) {
   return this.http.get<{ name: string }>(`${this.baseServerUrl}/GetUserName/${nid}`);
+}
+getLastLogin(nid: string) {
+  return this.http.get<{ lastLogin: string }>(`/api/user/${nid}/last-login`);
 }
 }
 

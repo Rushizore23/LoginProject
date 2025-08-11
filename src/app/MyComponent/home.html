@@ -1,0 +1,45 @@
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="welcome-box">
+      <p> Hey, {{ userName }}</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <!-- Navbar tools -->
+      <div class="navbar-tools">
+        <a routerLink="/home">Home</a>
+        <a routerLink="/about">About</a>
+        <a routerLink="/contact">Contact</a>
+      </div>
+
+      <!--<span class="username-text">Hey, {{ userName }}</span>-->
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+
+    <!-- Divider -->
+    <hr class="divider" />
+
+    <!-- Platform Section -->
+    <div class="platforms-section">
+      <h3>You have access to the following platforms</h3>
+
+      <div class="platforms-grid">
+        <div class="platform-box" *ngFor="let platform of platforms">
+          <a [href]="platform.url" target="_blank">
+            <img
+              [src]="'assets/' + platform.imageName"
+              alt="{{ platform.name }}"
+              (error)="onImageError($event)"
+            />
+            <p>{{ platform.name }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
